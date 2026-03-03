@@ -46,6 +46,9 @@ async def process_vtt(file: UploadFile = File(...)):
         if original_size > 0:
             reduction = round((1 - (new_size / original_size)) * 100, 2)
             
+        print(f"DEBUG: Processed {len(raw_entries)} raw entries into {len(consolidated)} consolidated entries.")
+        print(f"DEBUG: Reduction: {reduction}%")
+        
         return ProcessingResult(
             consolidated_entries=consolidated,
             speaker_metrics=metrics,

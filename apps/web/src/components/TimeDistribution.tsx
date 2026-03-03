@@ -18,15 +18,16 @@ export const TimeDistribution = ({ metrics, totalTime }: TimeDistributionProps) 
                     <div
                         className="w-full h-full rounded-full"
                         style={{
-                            background: `conic-gradient(
+                            background: totalTime > 0 && metrics.length > 0 ? `conic-gradient(
                 ${metrics.map((s, i) => {
-                                const percentage = (s.total_time_s / totalTime) * 100;
-                                const startColor = i === 0 ? '#0b50da' : i === 1 ? '#101622' : i === 2 ? '#3b82f6' : '#94a3b8';
+                                const percentage = totalTime > 0 ? (s.total_time_s / totalTime) * 100 : 0;
+                                const colors = ['#0b50da', '#2563eb', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe'];
+                                const startColor = colors[i % colors.length];
                                 const res = `${startColor} ${currentOffset}% ${currentOffset + percentage}%`;
                                 currentOffset += percentage;
                                 return res;
                             }).join(', ')}
-              )`
+              )` : '#f3f4f6'
                         }}
                     ></div>
                     <div className="absolute inset-8 bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
@@ -39,8 +40,9 @@ export const TimeDistribution = ({ metrics, totalTime }: TimeDistributionProps) 
 
                 <div className="flex-1 w-full space-y-4">
                     {metrics.map((s, i) => {
-                        const percentage = Math.round((s.total_time_s / totalTime) * 100);
-                        const colorClass = i === 0 ? 'bg-primary' : i === 1 ? 'bg-background-dark' : i === 2 ? 'bg-blue-400' : 'bg-gray-400';
+                        const percentage = totalTime > 0 ? Math.round((s.total_time_s / totalTime) * 100) : 0;
+                        const colors = ['bg-primary', 'bg-blue-600', 'bg-blue-500', 'bg-blue-400', 'bg-blue-300', 'bg-blue-200'];
+                        const colorClass = colors[i % colors.length];
 
                         return (
                             <div key={s.speaker} className="space-y-1">

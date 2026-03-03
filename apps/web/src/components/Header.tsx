@@ -12,11 +12,6 @@ export const Header = () => {
                     </div>
                 </div>
 
-                <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-500">
-                    <a href="#" className="hover:text-primary transition-colors">Documentación</a>
-                    <a href="#" className="hover:text-primary transition-colors">Historias de Usuario</a>
-                    <a href="#" className="hover:text-primary transition-colors">PDR</a>
-                </nav>
 
                 <div className="flex items-center gap-4">
                     <button className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-full text-sm font-semibold hover:bg-blue-700 transition-all shadow-md shadow-primary/10">

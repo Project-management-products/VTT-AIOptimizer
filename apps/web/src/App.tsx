@@ -42,19 +42,15 @@ function App() {
             }
 
             const data: ProcessingResult = await response.json();
+            clearInterval(progressInterval);
             setProgress(100);
-
-            // Artificial delay to show 100% (Screen 2 completion)
-            setTimeout(() => {
-                setResult(data);
-                setIsUploading(false);
-                clearInterval(progressInterval);
-            }, 500);
+            setResult(data);
+            setIsUploading(false);
 
         } catch (err: any) {
+            clearInterval(progressInterval);
             setError(err.message || 'Error de conexión con el servidor');
             setIsUploading(false);
-            clearInterval(progressInterval);
         }
     };
 

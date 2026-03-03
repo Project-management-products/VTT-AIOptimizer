@@ -88,11 +88,7 @@ export const MetricsDashboard = ({ data }: MetricsDashboardProps) => {
             </div>
 
             {/* Markdown Preview */}
-            <div className="bg-background-dark text-white p-10 rounded-3xl shadow-2xl relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-8 transform translate-x-4 -translate-y-4 opacity-10 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-700">
-                    <span className="material-symbols-outlined text-9xl">article</span>
-                </div>
-
+            <div className="bg-gray-800 text-white p-10 rounded-3xl shadow-xl relative overflow-hidden group">
                 <div className="relative z-10">
                     <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
                         <span className="material-symbols-outlined">description</span>

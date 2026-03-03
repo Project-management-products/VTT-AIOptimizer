@@ -8,8 +8,8 @@ export interface ConsolidatedEntry {
 export interface SpeakerMetrics {
     speaker: string;
     total_time_s: number;
-    original_interventions: int;
-    consolidated_interventions: int;
+    original_interventions: number;
+    consolidated_interventions: number;
 }
 
 export interface ProcessingResult {

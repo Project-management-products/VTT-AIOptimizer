@@ -30,6 +30,14 @@ def parse_vtt_content(content: str) -> List[VttEntry]:
         
         # Extract speaker from voice attribute
         speaker = getattr(caption, "voice", "Unknown").strip()
+        
+        # Decode HTML entities in speaker name (Camilo Mu&#241;oz -> Camilo Muñoz)
+        speaker = html.unescape(speaker)
+        
+        # Clean speaker: Remove session IDs (e.g., (001ec368...), [Hex], etc.)
+        # Usually they look like (8 characters+) or long hex strings
+        speaker = re.sub(r'\s*[\(\[]?([0-9a-fA-F]{8,})[\)\]]?\s*', '', speaker).strip()
+        
         if not speaker:
             speaker = "Unknown"
         
