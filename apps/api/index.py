@@ -35,7 +35,7 @@ async def process_vtt(file: UploadFile = File(...)):
         # 3. Calculate Metrics
         metrics = metrics_calculator.calculate_metrics(consolidated)
         total_time = metrics_calculator.get_total_time(metrics)
-        participants = [m.speaker for m in metrics]
+        participants = [m["speaker"] for m in metrics]
         
         # 4. Export Markdown
         original_size = len(content)
