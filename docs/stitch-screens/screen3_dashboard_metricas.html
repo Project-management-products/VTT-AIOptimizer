@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0b50da",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<title>VTT Analysis Dashboard</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">analytics</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">VTT Analysis</h2>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+</div>
+</div>
+</header>
+<main class="px-4 md:px-10 lg:px-40 py-8 max-w-[1440px] mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row flex-wrap justify-between items-start md:items-center gap-4 mb-8">
+<div>
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">VTT Analysis Results</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Review speech distribution and intervention metrics</p>
+</div>
+<button class="flex items-center justify-center rounded-lg h-12 bg-primary text-white gap-2 text-sm font-bold px-6 shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined">file_download</span>
+                    Descargar VTT Compacto
+                </button>
+</div>
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">timer</span>
+<p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Total Speech Time</p>
+</div>
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">28.32s</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">groups</span>
+<p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Number of Speakers</p>
+</div>
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">3</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">forum</span>
+<p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Total Interventions</p>
+</div>
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">16</p>
+</div>
+</div>
+<!-- Data Visualization and Table Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Speaker Metrics Table -->
+<div class="lg:col-span-2 flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">list_alt</span>
+                            Speaker Metrics
+                        </h2>
+</div>
+<div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-slate-600 dark:text-slate-300 text-xs font-bold uppercase tracking-wider">Orador</th>
+<th class="px-6 py-4 text-slate-600 dark:text-slate-300 text-xs font-bold uppercase tracking-wider">Tiempo</th>
+<th class="px-6 py-4 text-slate-600 dark:text-slate-300 text-xs font-bold uppercase tracking-wider">Intervenciones originales</th>
+<th class="px-6 py-4 text-slate-600 dark:text-slate-300 text-xs font-bold uppercase tracking-wider">Consolidados</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">CF</div>
+<span class="text-slate-900 dark:text-white font-medium">Carlos Farías</span>
+</div>
+</td>
+<td class="px-6 py-5 text-primary font-semibold">23.68s</td>
+<td class="px-6 py-5 text-slate-600 dark:text-slate-400">13</td>
+<td class="px-6 py-5 text-slate-600 dark:text-slate-400">3</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-sky-500 flex items-center justify-center text-white text-xs font-bold">AA</div>
+<span class="text-slate-900 dark:text-white font-medium">Alfredo Artigas</span>
+</div>
+</td>
+<td class="px-6 py-5 text-primary font-semibold">4.08s</td>
+<td class="px-6 py-5 text-slate-600 dark:text-slate-400">2</td>
+<td class="px-6 py-5 text-slate-600 dark:text-slate-400">2</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-bold">MC</div>
+<span class="text-slate-900 dark:text-white font-medium">Mauricio Cruzat</span>
+</div>
+</td>
+<td class="px-6 py-5 text-primary font-semibold">0.56s</td>
+<td class="px-6 py-5 text-slate-600 dark:text-slate-400">1</td>
+<td class="px-6 py-5 text-slate-600 dark:text-slate-400">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Donut Chart Representation -->
+<div class="flex flex-col">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">pie_chart</span>
+                        Time Distribution
+                    </h2>
+<div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm flex flex-col items-center justify-center grow">
+<!-- Custom CSS Donut Visualization -->
+<div class="relative w-48 h-48 rounded-full flex items-center justify-center border-[20px] border-slate-100 dark:border-slate-800" style="background: conic-gradient(#0b50da 0% 83.6%, #0ea5e9 83.6% 98.1%, #6366f1 98.1% 100%);">
+<div class="absolute inset-0 w-full h-full rounded-full border-[20px] border-transparent"></div>
+<div class="w-32 h-32 bg-white dark:bg-slate-900 rounded-full flex flex-col items-center justify-center shadow-inner">
+<span class="text-xs text-slate-500 font-medium">TOTAL</span>
+<span class="text-xl font-black text-slate-900 dark:text-white tracking-tighter">28.32s</span>
+</div>
+</div>
+<div class="mt-8 w-full space-y-3">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-slate-600 dark:text-slate-400">Carlos Farías</span>
+</div>
+<span class="font-bold">83.6%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-sky-500"></div>
+<span class="text-slate-600 dark:text-slate-400">Alfredo Artigas</span>
+</div>
+<span class="font-bold">14.5%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-indigo-500"></div>
+<span class="text-slate-600 dark:text-slate-400">Mauricio Cruzat</span>
+</div>
+<span class="font-bold">1.9%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-auto px-10 py-6 border-t border-slate-200 dark:border-slate-800 text-center text-slate-500 text-sm">
+<p>© 2024 VTT Analytics Engine. All rights reserved.</p>
+</footer>
+</div>
+</body></html>
