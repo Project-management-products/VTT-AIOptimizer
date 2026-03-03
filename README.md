@@ -9,8 +9,8 @@ This project follows the `vercel-monorepository-structure` pattern, ensuring sea
 ```text
 .
 ├── apps/
-│   ├── frontend/       # React + Vite + Tailwind CSS
-│   └── backend/        # FastAPI (Python)
+│   ├── web/            # React + Vite + Tailwind CSS
+│   └── api/            # FastAPI (Python)
 ├── packages/           # Shared logic (future growth)
 ├── vercel.json         # Global routing (routes /api/* to backend)
 ├── package.json        # Root workspace manifest
@@ -36,7 +36,7 @@ You can launch both the frontend and backend concurrently from the root director
 2.  **Setup Backend Environment:**
     Navigate to the backend directory to set up your Python environment:
     ```bash
-    cd apps/backend
+    cd apps/api
     python -m venv venv
     # Windows
     .\venv\Scripts\activate
@@ -55,8 +55,8 @@ You can launch both the frontend and backend concurrently from the root director
     - **Backend API:** [http://localhost:8000](http://localhost:8000) (Proxied via `/api` on the frontend)
 
 ### 🔌 API Routing & Proxy
-- **During Development:** Vite is configured in `apps/frontend/vite.config.ts` to proxy any requests starting with `/api` to `http://localhost:8000`.
-- **In Production (Vercel):** `vercel.json` handles the routing, ensuring `/api/*` requests reach the FastAPI entry point at `apps/backend/index.py`.
+- **During Development:** Vite is configured in `apps/web/vite.config.ts` to proxy any requests starting with `/api` to `http://localhost:8000`.
+- **In Production (Vercel):** `vercel.json` handles the routing, ensuring `/api/*` requests reach the FastAPI entry point at `apps/api/index.py`.
 
 ## 🧪 Testing
 

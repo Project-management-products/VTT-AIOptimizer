@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+webvtt-py
+python-multipart
+pydantic
