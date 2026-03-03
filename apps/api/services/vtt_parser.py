@@ -2,7 +2,7 @@ import webvtt
 import html
 import re
 from typing import List
-from ..schemas import VttEntry
+from schemas import VttEntry
 
 def _to_seconds(timestamp: str) -> float:
     """Converts HH:MM:SS.mmm to float seconds."""
@@ -37,11 +37,11 @@ def parse_vtt_content(content: str) -> List[VttEntry]:
         start_ms = _to_seconds(caption.start) * 1000
         end_ms = _to_seconds(caption.end) * 1000
         
-        entries.append(VttEntry(
-            speaker=speaker,
-            start_ms=start_ms,
-            end_ms=end_ms,
-            text=text
-        ))
+        entries.append({
+            "speaker": speaker,
+            "start_ms": start_ms,
+            "end_ms": end_ms,
+            "text": text
+        })
         
     return entries

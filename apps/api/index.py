@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .schemas import ProcessingResult
-from .services import vtt_parser, speaker_merger, metrics_calculator, markdown_exporter
+from schemas import ProcessingResult
+from services import vtt_parser, speaker_merger, metrics_calculator, markdown_exporter
 import io
 
 app = FastAPI()
