@@ -26,9 +26,9 @@ The agent must ensure the following directory structure:
 ```text
 <root>/
 ├── apps/
-│   ├── <frontend_app>/      # Frontend (Next.js, Vite, Vue, etc.)
+│   ├── <frontend_app>/      # Frontend (Next.js, Vite, Vue, etc.) (e.g., /app, /web)
 │   │   └── <manifest>       # e.g., package.json
-│   └── <backend_app>/       # Backend (FastAPI, Express, NestJS, etc.)
+│   └── <backend_app>/       # Backend (FastAPI, Express, NestJS, etc.) (e.g., /api, /server)
 │       └── <manifest>       # e.g., requirements.txt, package.json
 ├── packages/                # Shared code/libraries
 │   ├── <shared_logic>/      # e.g., types, utils, config
