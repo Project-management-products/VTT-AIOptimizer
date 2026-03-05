@@ -82,7 +82,7 @@ function App() {
                         <section className="max-w-4xl mx-auto text-center mb-16 space-y-6">
                             <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.05] text-background-dark">
                                 Tus reuniones, <br />
-                                <span className="text-primary italic">claras y optimizadas.</span>
+                                <span className="text-primary ">claras y optimizadas.</span>
                             </h2>
                             <p className="text-gray-400 text-xl font-medium max-w-2xl mx-auto leading-relaxed">
                                 Procesa archivos VTT para obtener métricas de participación y reportes limpios en segundos.

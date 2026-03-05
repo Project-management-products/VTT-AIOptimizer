@@ -14,42 +14,60 @@ def _to_seconds(timestamp: str) -> float:
     ms = int(s_full[1]) if len(s_full) > 1 else 0
     return h * 3600 + m * 60 + s + (ms / 1000.0)
 
-def parse_vtt_content(content: str) -> List[VttEntry]:
+def parse_vtt_content(content: str) -> List[dict]:
     """
-    Parses VTT content, decodes HTML entities, and extracts speakers from <v Name> tags.
+    Parses VTT content, decodes HTML entities, and extracts speakers.
+    Includes defensive checks for malformed files and missing headers.
     """
     import io
-    vtt_file = io.StringIO(content)
     
+    # Ensure WEBVTT header exists
+    if not content.strip().startswith("WEBVTT"):
+        content = "WEBVTT\n\n" + content
+    
+    vtt_file = io.StringIO(content)
     entries = []
-    for caption in webvtt.read_buffer(vtt_file):
-        text = caption.text
-        
-        # Decode HTML entities (í, ñ, etc.)
-        text = html.unescape(text).strip()
-        
-        # Extract speaker from voice attribute
-        speaker = getattr(caption, "voice", "Unknown").strip()
-        
-        # Decode HTML entities in speaker name (Camilo Mu&#241;oz -> Camilo Muñoz)
-        speaker = html.unescape(speaker)
-        
-        # Clean speaker: Remove session IDs (e.g., (001ec368...), [Hex], etc.)
-        # Usually they look like (8 characters+) or long hex strings
-        speaker = re.sub(r'\s*[\(\[]?([0-9a-fA-F]{8,})[\)\]]?\s*', '', speaker).strip()
-        
-        if not speaker:
-            speaker = "Unknown"
-        
-        # Manual precision parsing
-        start_ms = _to_seconds(caption.start) * 1000
-        end_ms = _to_seconds(caption.end) * 1000
-        
-        entries.append({
-            "speaker": speaker,
-            "start_ms": start_ms,
-            "end_ms": end_ms,
-            "text": text
-        })
+    
+    try:
+        for caption in webvtt.read_buffer(vtt_file):
+            try:
+                # Safely get text
+                text_raw = getattr(caption, "text", "")
+                if text_raw is None: text_raw = ""
+                text = html.unescape(text_raw).strip()
+                
+                # Safely get speaker
+                speaker_raw = getattr(caption, "voice", "")
+                if speaker_raw is None: speaker_raw = ""
+                speaker = html.unescape(speaker_raw).strip()
+                
+                # Clean speaker: Remove session IDs
+                speaker = re.sub(r'\s*[\(\[]?([0-9a-fA-F]{8,})[\)\]]?\s*', '', speaker).strip()
+                
+                if not speaker or speaker.lower() == "none":
+                    speaker = "Unknown"
+                
+                # Safely parse times
+                start_val = getattr(caption, "start", "00:00:00.000")
+                end_val = getattr(caption, "end", "00:00:00.000")
+                
+                start_ms = _to_seconds(start_val) * 1000
+                end_ms = _to_seconds(end_val) * 1000
+                
+                entries.append({
+                    "speaker": speaker,
+                    "start_ms": start_ms,
+                    "end_ms": end_ms,
+                    "text": text
+                })
+            except Exception as inner_e:
+                print(f"DEBUG: Skipping malformed caption block: {inner_e}")
+                continue
+                
+    except Exception as outer_e:
+        print(f"DEBUG: Critical error in webvtt parser: {outer_e}")
+        import traceback
+        traceback.print_exc()
+        raise outer_e
         
     return entries

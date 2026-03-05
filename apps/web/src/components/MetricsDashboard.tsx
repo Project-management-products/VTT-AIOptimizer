@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { ProcessingResult } from '../types';
 import { SpeakerTable } from './SpeakerTable';
 import { TimeDistribution } from './TimeDistribution';
@@ -88,22 +90,47 @@ export const MetricsDashboard = ({ data }: MetricsDashboardProps) => {
             </div>
 
             {/* Markdown Preview */}
-            <div className="bg-gray-50 text-gray-900 p-10 rounded-3xl border border-gray-100 relative overflow-hidden group">
+            <div className="bg-white p-10 rounded-3xl border border-gray-100 relative overflow-hidden group">
                 <div className="relative z-10">
-                    <h3 className="text-xl font-bold mb-6 flex items-center gap-3 text-background-dark">
+                    <h3 className="text-xl font-bold mb-8 flex items-center gap-3 text-background-dark">
                         <span className="material-symbols-outlined">description</span>
                         Vista Previa del Reporte
                     </h3>
-                    <div className="bg-white border border-gray-200 rounded-2xl p-6 font-mono text-sm line-clamp-[15] text-gray-600 leading-relaxed whitespace-pre-wrap">
-                        {data.markdown_output}
+
+                    <div className="prose prose-sm prose-slate max-w-none 
+                        bg-gray-50 border border-gray-100 rounded-2xl p-8 
+                        font-sans text-gray-700 leading-relaxed 
+                        overflow-y-auto max-h-[600px]
+                        scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+                        <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                                h1: ({ node, ...props }) => <h1 className="text-2xl font-black mb-4 border-b pb-2" {...props} />,
+                                h2: ({ node, ...props }) => <h2 className="text-xl font-bold mt-8 mb-4 border-b pb-2" {...props} />,
+                                p: ({ node, ...props }) => <p className="mb-4 last:mb-0" {...props} />,
+                                table: ({ node, ...props }) => (
+                                    <div className="overflow-x-auto my-6">
+                                        <table className="min-w-full divide-y divide-gray-200 border rounded-lg overflow-hidden" {...props} />
+                                    </div>
+                                ),
+                                thead: ({ node, ...props }) => <thead className="bg-gray-50" {...props} />,
+                                th: ({ node, ...props }) => <th className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-widest" {...props} />,
+                                td: ({ node, ...props }) => <td className="px-4 py-3 text-sm border-t" {...props} />,
+                                hr: ({ node, ...props }) => <hr className="my-10 border-gray-200" {...props} />,
+                                strong: ({ node, ...props }) => <strong className="font-bold text-primary" {...props} />,
+                            }}
+                        >
+                            {data.markdown_output}
+                        </ReactMarkdown>
                     </div>
+
                     <div className="mt-6 flex justify-end">
                         <button
                             onClick={handleDownload}
                             className="text-primary hover:text-blue-700 font-bold text-sm transition-colors flex items-center gap-2"
                         >
-                            Ver contenido completo
-                            <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                            Descargar archivo completo
+                            <span className="material-symbols-outlined text-sm">download</span>
                         </button>
                     </div>
                 </div>
