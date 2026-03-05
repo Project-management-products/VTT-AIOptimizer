@@ -3,3 +3,4 @@ uvicorn
 webvtt-py
 python-multipart
 pydantic
+httpx

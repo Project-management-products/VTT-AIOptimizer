@@ -19,6 +19,13 @@ class SpeakerMetrics(BaseModel):
     original_interventions: int
     consolidated_interventions: int
 
+class UserStoryRequest(BaseModel):
+    markdown_content: str
+
+class UserStoryResponse(BaseModel):
+    user_story: str
+    status: str = "success"
+
 class ProcessingResult(BaseModel):
     consolidated_entries: List[ConsolidatedEntry]
     speaker_metrics: List[SpeakerMetrics]
@@ -26,3 +33,4 @@ class ProcessingResult(BaseModel):
     participants: List[str]
     markdown_output: str
     reduction_percentage: float
+    user_story_preview: str = "" # Optional preview

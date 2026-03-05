@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from schemas import ProcessingResult
-from services import vtt_parser, speaker_merger, metrics_calculator, markdown_exporter
+import schemas
+from services import vtt_parser, speaker_merger, metrics_calculator, markdown_exporter, ai_gateway
 import io
 
 app = FastAPI()
@@ -14,11 +14,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.post("/api/generate-user-story", response_model=schemas.UserStoryResponse)
+async def generate_user_story(request: schemas.UserStoryRequest):
+    try:
+        user_story = await ai_gateway.generate_user_story(request.markdown_content)
+        if not user_story:
+            raise HTTPException(status_code=500, detail="Failed to generate user story from AI Gateway")
+        return schemas.UserStoryResponse(user_story=user_story)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"AI Gateway error: {str(e)}")
+
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "message": "Metrics Hub API is running"}
 
-@app.post("/api/process", response_model=ProcessingResult)
+@app.post("/api/process", response_model=schemas.ProcessingResult)
 async def process_vtt(file: UploadFile = File(...)):
     if not file.filename.endswith('.vtt') and not file.filename.endswith('.txt'):
         raise HTTPException(status_code=400, detail="Invalid file type. Please upload a .vtt or .txt file.")
@@ -49,7 +59,7 @@ async def process_vtt(file: UploadFile = File(...)):
         print(f"DEBUG: Processed {len(raw_entries)} raw entries into {len(consolidated)} consolidated entries.")
         print(f"DEBUG: Reduction: {reduction}%")
         
-        return ProcessingResult(
+        return schemas.ProcessingResult(
             consolidated_entries=consolidated,
             speaker_metrics=metrics,
             total_speaking_time_s=total_time,

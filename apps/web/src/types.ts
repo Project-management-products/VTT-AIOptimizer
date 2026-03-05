@@ -19,4 +19,10 @@ export interface ProcessingResult {
     participants: string[];
     markdown_output: string;
     reduction_percentage: number;
+    userStory?: string;
+}
+
+export interface UserStoryResponse {
+    user_story: string;
+    status: string;
 }
