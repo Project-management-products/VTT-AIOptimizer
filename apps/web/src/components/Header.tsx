@@ -1,4 +1,4 @@
-export const Header = () => {
+export const Header = ({ onHome }: { onHome: () => void }) => {
     return (
         <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
             <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
@@ -14,7 +14,10 @@ export const Header = () => {
 
 
                 <div className="flex items-center gap-4">
-                    <button className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-full text-sm font-semibold hover:bg-blue-700 transition-all shadow-md shadow-primary/10">
+                    <button
+                        onClick={onHome}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-full text-sm font-semibold hover:bg-blue-700 transition-all shadow-md shadow-primary/10"
+                    >
                         <span className="material-symbols-outlined text-sm">rocket_launch</span>
                         Comenzar
                     </button>

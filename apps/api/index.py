@@ -39,7 +39,7 @@ async def process_vtt(file: UploadFile = File(...)):
         
         # 4. Export Markdown
         original_size = len(content)
-        md_output = markdown_exporter.export_to_markdown(consolidated)
+        md_output = markdown_exporter.export_to_markdown(consolidated, metrics, total_time)
         new_size = len(md_output)
         
         reduction = 0

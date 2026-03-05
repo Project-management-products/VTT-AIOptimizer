@@ -63,7 +63,7 @@ function App() {
 
     return (
         <div className="min-h-screen bg-background-light selection:bg-primary/10 selection:text-primary">
-            <Header />
+            <Header onHome={handleReset} />
 
             <main className="pt-32 pb-20 px-6">
                 {error && (

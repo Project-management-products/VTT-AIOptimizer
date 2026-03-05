@@ -88,19 +88,19 @@ export const MetricsDashboard = ({ data }: MetricsDashboardProps) => {
             </div>
 
             {/* Markdown Preview */}
-            <div className="bg-gray-800 text-white p-10 rounded-3xl shadow-xl relative overflow-hidden group">
+            <div className="bg-gray-50 text-gray-900 p-10 rounded-3xl border border-gray-100 relative overflow-hidden group">
                 <div className="relative z-10">
-                    <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
+                    <h3 className="text-xl font-bold mb-6 flex items-center gap-3 text-background-dark">
                         <span className="material-symbols-outlined">description</span>
                         Vista Previa del Reporte
                     </h3>
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-6 font-mono text-sm line-clamp-[15] text-gray-300 leading-relaxed whitespace-pre-wrap">
+                    <div className="bg-white border border-gray-200 rounded-2xl p-6 font-mono text-sm line-clamp-[15] text-gray-600 leading-relaxed whitespace-pre-wrap">
                         {data.markdown_output}
                     </div>
                     <div className="mt-6 flex justify-end">
                         <button
                             onClick={handleDownload}
-                            className="text-primary hover:text-blue-400 font-bold text-sm transition-colors flex items-center gap-2"
+                            className="text-primary hover:text-blue-700 font-bold text-sm transition-colors flex items-center gap-2"
                         >
                             Ver contenido completo
                             <span className="material-symbols-outlined text-sm">arrow_forward</span>
