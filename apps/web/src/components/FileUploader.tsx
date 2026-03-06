@@ -109,7 +109,7 @@ export const FileUploader = ({ onUpload, isUploading, progress }: FileUploaderPr
                             {[
                                 { icon: 'lock', label: '100% Privado' },
                                 { icon: 'verified_user', label: 'GDPR Ready' },
-                                { icon: 'auto_clean', label: 'Auto-limpieza' }
+                                { icon: 'cleaning_services', label: 'Auto-limpieza' }
                             ].map((badge) => (
                                 <div key={badge.label} className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-full text-[11px] font-bold text-gray-500 uppercase tracking-widest">
                                     <span className="material-symbols-outlined text-sm">{badge.icon}</span>
