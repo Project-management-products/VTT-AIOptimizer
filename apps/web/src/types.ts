@@ -19,10 +19,11 @@ export interface ProcessingResult {
     participants: string[];
     markdown_output: string;
     reduction_percentage: number;
-    userStory?: string;
+    report_markdown: string;      // Informe generado (opcional)
+    original_filename: string;   // Nombre original del archivo subido
+    anonymized_vtt_text: string; // Texto anonimizado para enviar al reporte
 }
 
-export interface UserStoryResponse {
-    user_story: string;
-    status: string;
+export interface GenerateReportResponse {
+    report_markdown: string;
 }
