@@ -125,8 +125,8 @@ export const FileUploader = ({ onUpload, isUploading, progress }: FileUploaderPr
                 <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
                     {[
                         { step: '01', title: 'Carga el VTT', desc: 'Sube tu archivo generado por Teams o Zoom.' },
-                        { step: '02', title: 'Procesamiento AI', desc: 'Consolidamos oradores y limpiamos ruido.' },
-                        { step: '03', title: 'Genera Reporte', desc: 'Obtén métricas y el MD listo para usar.' }
+                        { step: '02', title: 'Procesamiento VTT', desc: 'Consolidamos oradores y limpiamos ruido.' },
+                        { step: '03', title: 'Genera Reporte AI', desc: 'Obtén métricas y el MD listo para usar.' }
                     ].map((item) => (
                         <div key={item.step} className="p-8 bg-white/50 border border-white rounded-3xl hover:bg-white transition-colors">
                             <span className="text-primary/20 text-4xl font-black mb-4 block">{item.step}</span>
