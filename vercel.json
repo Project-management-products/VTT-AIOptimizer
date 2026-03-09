@@ -1,5 +1,5 @@
 {
-  "installCommand": "npm install --include=dev",
+  "installCommand": "npm install --workspaces --include-workspace-root --include=dev",
   "buildCommand": "npm run build --workspace=web",
   "outputDirectory": "apps/web/dist",
   "functions": {
