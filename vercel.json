@@ -1,5 +1,5 @@
 {
-  "installCommand": "if [ -d apps/web ]; then npm install --workspaces --include-workspace-root --include=dev; else npm install --include=dev && npm install --prefix ../web --include=dev; fi",
+  "installCommand": "if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; elif [ -f apps/api/requirements.txt ]; then python -m pip install -r apps/api/requirements.txt; fi && if [ -d apps/web ]; then npm install --workspaces --include-workspace-root --include=dev; else npm install --include=dev && npm install --prefix ../web --include=dev; fi",
   "buildCommand": "if [ -d apps/web ]; then npm run build --workspace=web && rm -rf dist && mkdir -p dist && cp -r apps/web/dist/* dist/; else npm run build --prefix ../web && rm -rf dist && mkdir -p dist && cp -r ../web/dist/* dist/; fi",
   "outputDirectory": "dist",
   "functions": {
