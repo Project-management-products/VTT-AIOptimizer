@@ -1,1 +1,8 @@
--r apps/api/requirements.txt
+fastapi
+mangum
+uvicorn
+webvtt-py
+python-multipart
+pydantic
+httpx
+python-dotenv
