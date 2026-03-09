@@ -1,14 +1,26 @@
-import os
-from dotenv import load_dotenv, find_dotenv
+from importlib import import_module
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import schemas
 from services import vtt_parser, speaker_merger, metrics_calculator, markdown_exporter
 from services import speaker_anonymizer, report_gateway
-import io
 
-# Cargar variables de entorno del archivo .env (que está en la raíz del monorepo)
-load_dotenv(find_dotenv())
+def _load_local_env() -> None:
+    """
+    Loads .env for local development only.
+    In Vercel, environment variables should be configured in project settings.
+    """
+    try:
+        dotenv = import_module("dotenv")
+        load_dotenv = getattr(dotenv, "load_dotenv", None)
+        find_dotenv = getattr(dotenv, "find_dotenv", None)
+        if callable(load_dotenv) and callable(find_dotenv):
+            load_dotenv(find_dotenv())
+    except ModuleNotFoundError:
+        pass
+
+
+_load_local_env()
 
 app = FastAPI()
 
@@ -26,7 +38,8 @@ def health_check():
 
 @app.post("/api/process", response_model=schemas.ProcessingResult)
 async def process_vtt(file: UploadFile = File(...)):
-    if not file.filename.endswith('.vtt') and not file.filename.endswith('.txt'):
+    filename = file.filename or ""
+    if not filename.endswith(".vtt") and not filename.endswith(".txt"):
         raise HTTPException(status_code=400, detail="Invalid file type. Please upload a .vtt or .txt file.")
 
     try:
@@ -64,14 +77,14 @@ async def process_vtt(file: UploadFile = File(...)):
             reduction = round((1 - (new_size / original_size)) * 100, 2)
 
         return schemas.ProcessingResult(
-            consolidated_entries=consolidated, # FULL
-            speaker_metrics=real_metrics,     # FULL
+            consolidated_entries=[schemas.ConsolidatedEntry(**entry) for entry in consolidated],  # FULL
+            speaker_metrics=[schemas.SpeakerMetrics(**metric) for metric in real_metrics],        # FULL
             total_speaking_time_s=total_time,
             participants=participants,        # REAL names
             markdown_output=md_output,        # FULL version
             reduction_percentage=reduction,
             report_markdown="",               # Empty, generated on demand via button
-            original_filename=file.filename or "transcripcion.vtt",
+            original_filename=filename or "transcripcion.vtt",
             anonymized_vtt_text=anonymized_vtt_text, # Ready for the prompt
         )
 

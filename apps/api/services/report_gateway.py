@@ -1,5 +1,8 @@
 import os
+import logging
 import httpx
+
+logger = logging.getLogger(__name__)
 
 async def generate_report(anonymized_vtt_text: str) -> str:
     """
@@ -31,12 +34,30 @@ async def generate_report(anonymized_vtt_text: str) -> str:
     }
 
     async with httpx.AsyncClient(timeout=120.0) as client:
-        response = await client.post(url, json=payload)
-        response.raise_for_status()
+        try:
+            logger.info("Calling report service: %s", url)
+            response = await client.post(url, json=payload)
+            logger.info("Report service status: %s", response.status_code)
+            logger.debug("Report service raw response: %s", response.text[:3000])
+            response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            status_code = exc.response.status_code if exc.response is not None else "unknown"
+            error_body = exc.response.text[:3000] if exc.response is not None else str(exc)
+            logger.error(
+                "Report service HTTP error. status=%s url=%s body=%s",
+                status_code,
+                url,
+                error_body,
+            )
+            raise
+        except httpx.RequestError as exc:
+            logger.error("Report service request error. url=%s error=%s", url, str(exc))
+            raise
 
         # Parse Anthropic-style content array
         try:
             data = response.json()
+            logger.debug("Report service parsed JSON: %s", str(data)[:3000])
             if isinstance(data, dict) and "content" in data:
                 content_list = data.get("content", [])
                 report_text = "".join(c.get("text", "") for c in content_list if isinstance(c, dict))
@@ -47,4 +68,5 @@ async def generate_report(anonymized_vtt_text: str) -> str:
             return str(data)
         except Exception:
             # If not JSON, return as text
+            logger.warning("Report service response is not JSON. Returning raw text.")
             return response.text

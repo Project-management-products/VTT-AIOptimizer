@@ -1,12 +1,18 @@
 {
+  "functions": {
+    "apps/api/index.py": {
+      "runtime": "python3.12",
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "apps/api/index.py"
+      "destination": "/apps/api/index.py"
     },
     {
       "source": "/(.*)",
-      "destination": "apps/web/index.html"
+      "destination": "/apps/web/index.html"
     }
   ]
 }
