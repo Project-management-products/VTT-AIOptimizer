@@ -106,3 +106,6 @@ async def generate_report_endpoint(request: schemas.GenerateReportRequest):
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Report generation error: {str(e)}")
+
+from mangum import Mangum
+handler = Mangum(app)

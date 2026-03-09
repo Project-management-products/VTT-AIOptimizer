@@ -1,4 +1,5 @@
 fastapi
+mangum
 uvicorn
 webvtt-py
 python-multipart
