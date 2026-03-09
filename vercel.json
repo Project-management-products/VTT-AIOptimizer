@@ -1,7 +1,7 @@
 {
-  "installCommand": "npm install --include=dev && npm install --prefix apps/web --include=dev",
-  "buildCommand": "npm run build --prefix apps/web",
-  "outputDirectory": "apps/web/dist",
+  "installCommand": "if [ -d apps/web ]; then npm install --workspaces --include-workspace-root --include=dev; else npm install --include=dev && npm install --prefix ../web --include=dev; fi",
+  "buildCommand": "if [ -d apps/web ]; then npm run build --workspace=web && rm -rf dist && mkdir -p dist && cp -r apps/web/dist/* dist/; else npm run build --prefix ../web && rm -rf dist && mkdir -p dist && cp -r ../web/dist/* dist/; fi",
+  "outputDirectory": "dist",
   "functions": {
     "apps/api/index.py": {
       "runtime": "python3.12",
