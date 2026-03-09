@@ -20,9 +20,9 @@ async def generate_report(anonymized_vtt_text: str) -> str:
     The external service returns an Anthropic-style JSON:
     { "content": [ { "text": "Report content..." }, ... ] }
     """
-    base_url = os.getenv("USER-STORIES-STUDIO-SERVER", "")
+    base_url = os.getenv("USER_STORIES_STUDIO_SERVER", "")
     if not base_url:
-        raise ValueError("Environment variable USER-STORIES-STUDIO-SERVER is not set.")
+        raise ValueError("Environment variable USER_STORIES_STUDIO_SERVER is not set.")
 
     url = f"{base_url.rstrip('/')}/api/vtt-reports-analysis/generate"
 
