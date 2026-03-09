@@ -1,4 +1,7 @@
 {
+  "installCommand": "npm install",
+  "buildCommand": "npm run build --workspace=web",
+  "outputDirectory": "apps/web/dist",
   "functions": {
     "apps/api/index.py": {
       "runtime": "python3.12",
@@ -11,8 +14,8 @@
       "destination": "/apps/api/index.py"
     },
     {
-      "source": "/(.*)",
-      "destination": "/apps/web/index.html"
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
