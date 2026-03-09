@@ -1,5 +1,5 @@
 {
-    "installCommand": "pip install -r requirements.txt && npm install --workspaces --include-workspace-root",
+    "installCommand": "pip install -r requirements.txt --break-system-packages && npm install --workspaces --include-workspace-root",
     "buildCommand": "npm run build --workspace=web && mkdir -p dist && cp -r apps/web/dist/* dist/",
     "outputDirectory": "dist",
     "functions": {
