@@ -1,6 +1,6 @@
 {
-  "installCommand": "npm install --workspaces --include-workspace-root --include=dev",
-  "buildCommand": "npm run build --workspace=web",
+  "installCommand": "npm install --include=dev && npm install --prefix apps/web --include=dev",
+  "buildCommand": "npm run build --prefix apps/web",
   "outputDirectory": "apps/web/dist",
   "functions": {
     "apps/api/index.py": {
